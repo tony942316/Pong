@@ -6,4 +6,6 @@ project(
     DESCRIPTION "Pong Remake"
     LANGUAGES C CXX)
 
+add_subdirectory(Dependencies/Pulsar)
+
 add_subdirectory(src)

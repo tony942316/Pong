@@ -38,7 +38,8 @@ namespace pong
             Stop = 0
         };
 
-        explicit constexpr Simulation() noexcept;
+        explicit constexpr Simulation(
+            const eqx::Rectangle<float>& court) noexcept;
 
         inline void update(float dt) noexcept;
 
@@ -69,6 +70,8 @@ namespace pong
         };
 
         bool m_KickedOff;
+
+        eqx::Rectangle<float> m_Court;
 
         std::array<Paddle, 2_size> m_Paddles;
         Ball m_Ball;

@@ -44,7 +44,8 @@ namespace pong
         constinit static inline auto s_Box = pul::Quad();
         constinit static inline auto s_Box2 = pul::Quad();
         constinit static inline auto s_Box3 = pul::Quad();
-        constinit static inline auto s_Sim = Simulation();
+        constinit static inline auto s_Sim = Simulation(
+            eqx::Rectangle<float>(0.0f, 0.0f, 1200.0f, 800.0f));
     };
 }
 

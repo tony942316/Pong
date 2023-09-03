@@ -22,9 +22,11 @@
 
 namespace pong
 {
-    constexpr Simulation::Simulation() noexcept
+    constexpr Simulation::Simulation(
+        const eqx::Rectangle<float>& court) noexcept
         :
         m_KickedOff(false),
+        m_Court(court),
         m_Paddles(),
         m_Ball()
     {
@@ -33,7 +35,7 @@ namespace pong
 
     inline void Simulation::update(float dt) noexcept
     {
-        static auto ballITimer = eqx::StopWatch();
+        errno = 0;
 
         m_Ball.pos += m_Ball.dir * m_Ball.speed * dt;
 
@@ -47,18 +49,27 @@ namespace pong
 
                 if (eqx::intersect(paddle.pos, getBall()))
                 {
-                    if (m_Ball.cd == false)
+                    auto dy = m_Ball.pos.y - paddle.pos.getCenterPoint().y;
+                    auto dis = dy / (paddle.pos.h / 2.0f);
+                    m_Ball.dir = eqx::normalize(eqx::Point<float>(
+                        m_Ball.dir.x * -1.0f, dis));
+                    while (eqx::intersect(paddle.pos, getBall()))
                     {
-                        m_Ball.dir.x *= -1;
-                        m_Ball.cd = true;
-                        ballITimer.start();
-                    }
-                    else if (ballITimer.readSeconds() > 0.3)
-                    {
-                        m_Ball.cd = false;
+                        m_Ball.pos += m_Ball.dir * m_Ball.speed * dt;
                     }
                 }
             });
+
+        if (m_Ball.pos.y < 0)
+        {
+            m_Ball.dir.y *= -1.0f;
+            m_Ball.pos.y = 0.0;
+        }
+        else if (m_Ball.pos.y + m_Ball.radius * 2.0f > m_Court.h)
+        {
+            m_Ball.dir.y *= -1.0f;
+            m_Ball.pos.y = m_Court.h - m_Ball.radius * 2.0f;
+        }
     }
 
     constexpr void Simulation::setState(PaddleType paddle,

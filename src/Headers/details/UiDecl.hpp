@@ -15,37 +15,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PONG_DETAILS_GAMEDECL_HPP
-#define PONG_DETAILS_GAMEDECL_HPP
+#ifndef PONG_DETAILS_UIDECL_HPP
+#define PONG_DETAILS_UIDECL_HPP
 
 #include "Dependencies.hpp"
 
-#include "../Ui.hpp"
-#include "../Simulation.hpp"
-#include "../Renderer.hpp"
-
 namespace pong
 {
-    class Game
+    class Ui
     {
     public:
-        Game() = delete;
-        Game(const Game&) = delete;
-        Game(Game&&) = delete;
-        Game& operator= (const Game&) = delete;
-        Game& operator= (Game&&) = delete;
-        ~Game() = delete;
+        Ui() = delete;
+        Ui(const Ui&) = delete;
+        Ui(Ui&&) = delete;
+        Ui& operator= (const Ui&) = delete;
+        Ui& operator= (Ui&&) = delete;
+        ~Ui() = delete;
 
-        static inline void play() noexcept;
-
-    private:
         static inline void update() noexcept;
         static inline void render() noexcept;
 
-        constinit static inline auto s_Window = pul::Window();
-        constinit static inline auto s_Sim = Simulation(
-            eqx::Rectangle<float>(0.0f, 0.0f, 1200.0f, 800.0f));
+    private:
     };
 }
 
-#endif // PONG_DETAILS_GAMEDECL_HPP
+#endif // PONG_DETAILS_UIDECL_HPP

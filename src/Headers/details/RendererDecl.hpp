@@ -15,37 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PONG_DETAILS_GAMEDECL_HPP
-#define PONG_DETAILS_GAMEDECL_HPP
+#ifndef PONG_DETAILS_RENDERERDECL_HPP
+#define PONG_DETAILS_RENDERERDECL_HPP
 
 #include "Dependencies.hpp"
 
-#include "../Ui.hpp"
 #include "../Simulation.hpp"
-#include "../Renderer.hpp"
 
 namespace pong
 {
-    class Game
+    class Renderer
     {
     public:
-        Game() = delete;
-        Game(const Game&) = delete;
-        Game(Game&&) = delete;
-        Game& operator= (const Game&) = delete;
-        Game& operator= (Game&&) = delete;
-        ~Game() = delete;
+        Renderer() = delete;
+        Renderer(const Renderer&) = delete;
+        Renderer(Renderer&&) = delete;
+        Renderer& operator= (const Renderer&) = delete;
+        Renderer& operator= (Renderer&&) = delete;
+        ~Renderer() = delete;
 
-        static inline void play() noexcept;
+        static inline void render(const Simulation& sim) noexcept;
 
+        static inline void boot() noexcept;
     private:
-        static inline void update() noexcept;
-        static inline void render() noexcept;
 
-        constinit static inline auto s_Window = pul::Window();
-        constinit static inline auto s_Sim = Simulation(
-            eqx::Rectangle<float>(0.0f, 0.0f, 1200.0f, 800.0f));
+        static inline auto s_LeftPaddle = pul::CQuad();
+        static inline auto s_RightPaddle = pul::CQuad();
+        static inline auto s_Ball = pul::CQuad();
     };
 }
 
-#endif // PONG_DETAILS_GAMEDECL_HPP
+#endif // PONG_DETAILS_RENDERERDECL_HPP

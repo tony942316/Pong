@@ -33,8 +33,8 @@ namespace pong
 
         enum class Command : int
         {
-            Up = 1,
-            Down = -1,
+            Up = -1,
+            Down = 1,
             Stop = 0
         };
 
@@ -55,6 +55,15 @@ namespace pong
     private:
         struct Paddle
         {
+            explicit consteval Paddle() noexcept
+                :
+                dir(0),
+                speed(0.0f),
+                pos()
+            {
+
+            }
+
             int dir;
             float speed;
             eqx::Rectangle<float> pos;
@@ -62,6 +71,17 @@ namespace pong
 
         struct Ball
         {
+            explicit consteval Ball() noexcept
+                :
+                cd(false),
+                radius(0.0f),
+                speed(0.0f),
+                dir(),
+                pos()
+            {
+
+            }
+
             bool cd;
             float radius;
             float speed;

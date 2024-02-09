@@ -17,27 +17,32 @@
 
 cmake_minimum_required(VERSION 3.20)
 
-set(CMAKE_CXX_EXTENSIONS Off)
-set(CMAKE_EXPORT_COMPILE_COMMANDS On)
-
 add_executable(Pong Main.cpp)
 
-add_custom_target(copy_resources ALL
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${PROJECT_SOURCE_DIR}/src/Resources
-    ${PROJECT_BINARY_DIR}/src/Resources
-    COMMENT "Copying Resources!")
+set_target_properties(Pong PROPERTIES
+    CXX_EXTENSIONS Off
+    EXPORT_COMPILE_COMMANDS On)
 
-add_dependencies(Pong copy_resources)
-
-target_include_directories(Pong PRIVATE ../Dependencies/Pulsar/include)
+if (MSVC)
+    add_custom_command(TARGET Pong PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/Resources
+            ${CMAKE_CURRENT_SOURCE_DIR}/Release/Resources
+        COMMENT "Copying Resources!")
+else ()
+    add_custom_command(TARGET Pong PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_CURRENT_SOURCE_DIR}/Resources
+            ${CMAKE_CURRENT_SOURCE_DIR}/Resources
+        COMMENT "Copying Resources!")
+endif()
 
 target_link_libraries(Pong PRIVATE Pulsar)
 
 target_compile_features(Pong PRIVATE cxx_std_20)
 if (MSVC)
-    target_compile_options(Pong PRIVATE /W4 /GR- /Zc:preprocessor)
+    target_compile_options(Pong PRIVATE /W4 /GR- /O2)
 else ()
-    target_compile_options(Pong PRIVATE -Wall -Wextra -Wpedantic -Wconversion
-        -fno-rtti -fno-exceptions)
+    target_compile_options(Pong PRIVATE -O3 -Wall -Wextra -Wpedantic
+        -Wconversion -fno-rtti -fno-exceptions)
 endif()

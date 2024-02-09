@@ -18,7 +18,8 @@
 #ifndef PONG_HPP
 #define PONG_HPP
 
-#include "Headers/Game.hpp"
+#include "Headers/Ui.hpp"
 #include "Headers/Simulation.hpp"
+#include "Headers/Game.hpp"
 
 #endif // PONG_HPP

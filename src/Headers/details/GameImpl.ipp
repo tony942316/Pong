@@ -25,16 +25,10 @@ namespace pong
     inline void Game::play() noexcept
     {
         s_Window.init(1200, 800, "Pong"sv);
-        pul::Quad::init(1200, 800);
         s_Window.setUpdateFunc(update);
         s_Window.setRenderFunc(render);
 
-        s_Box.setMixture(1.0f);
-        s_Box.setColor(glm::vec4(0.8f, 0.0f, 0.2f, 1.0f));
-        s_Box2.setMixture(1.0f);
-        s_Box2.setColor(glm::vec4(0.8f, 0.0f, 0.2f, 1.0f));
-        s_Box3.setMixture(1.0f);
-        s_Box3.setColor(glm::vec4(0.2f, 0.0f, 0.8f, 1.0f));
+        Renderer::boot();
 
         s_Window.show();
     }
@@ -80,18 +74,13 @@ namespace pong
             s_Sim.reset();
         }
 
-        s_Box.setDrawBox(s_Sim.getPaddle(Simulation::PaddleType::Left));
-        s_Box2.setDrawBox(s_Sim.getPaddle(Simulation::PaddleType::Right));
-        s_Box3.setDrawBox(s_Sim.getBall());
-
         s_Sim.update(s_Window.getDeltaTime());
     }
 
     inline void Game::render() noexcept
     {
-        pul::Renderer::draw(s_Box);
-        pul::Renderer::draw(s_Box2);
-        pul::Renderer::draw(s_Box3);
+        Renderer::render(s_Sim);
+        //Ui::render();
     }
 }
 

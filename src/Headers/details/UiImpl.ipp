@@ -15,14 +15,22 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PONG_DETAILS_DEPENDENCIES_HPP
-#define PONG_DETAILS_DEPENDENCIES_HPP
+#ifndef PONG_DETAILS_UIIMPL_IPP
+#define PONG_DETAILS_UIIMPL_IPP
 
-#include <Pulsar/Pulsar.hpp>
+#include "UiDecl.hpp"
 
 namespace pong
 {
-    using namespace eqx::literals;
+    inline void Ui::update() noexcept
+    {
+
+    }
+
+    inline void Ui::render() noexcept
+    {
+
+    }
 }
 
-#endif // PONG_DETAILS_DEPENDENCIES_HPP
+#endif // PONG_DETAILS_UIIMPL_IPP
